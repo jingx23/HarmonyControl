@@ -2,7 +2,7 @@ name := "HarmonyControl"
 
 version := "1.0"
 
-lazy val `harmonycontrol` = (project in file(".")).enablePlugins(PlayScala)
+lazy val `harmonycontrol` = (project in file(".")).enablePlugins(PlayJava)
 
 scalaVersion := "2.11.1"
 

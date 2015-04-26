@@ -1,7 +1,13 @@
-@(message: String)
+@(activities: List[net.whistlingfish.harmony.config.Activity])
 
 @main("Welcome to Play") {
 
-    @play20.welcome(message)
+    <ul class="list">
+    @for(activity <- activities) {
+        <li data-task-id="@activity.getActivityOrder">
+            <h4>@activity.getLabel</h4>
+        </li>
+    }
+    </ul>
 
 }
