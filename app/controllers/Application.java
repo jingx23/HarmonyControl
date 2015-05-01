@@ -1,14 +1,17 @@
 package controllers;
 
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import helper.HarmonyInstance;
 import net.whistlingfish.harmony.config.Activity;
+import play.api.libs.json.JsPath;
+import play.libs.Json;
+import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by jsc on 26.04.15.
@@ -31,6 +34,25 @@ public class Application extends Controller {
             }
         });
         return ok(views.html.index.render(HarmonyInstance.getClient().getCurrentActivity(), listActivities));
+    }
+
+    @BodyParser.Of(BodyParser.Json.class)
+    public static Result command() {
+        JsonNode json = request().body().asJson();
+        if (json == null) {
+            return badRequest("Expecting Json data");
+        }
+        ObjectNode result = Json.newObject();
+        int deviceId = json.get("deviceId").asInt(-99);
+        String command = json.get("command").asText();
+        if(deviceId == -99 || command == null || "".equals(command)){
+            result.put("status", "Error");
+            result.put("message", "deviceId: " + deviceId + " command: " + command);
+        }else{
+            result.put("status", "OK");
+            HarmonyInstance.getClient().pressButton(deviceId, command);
+        }
+        return ok(result);
     }
 
 }
