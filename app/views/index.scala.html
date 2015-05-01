@@ -1,20 +1,70 @@
 @(currentActivity: net.whistlingfish.harmony.config.Activity, activities: List[net.whistlingfish.harmony.config.Activity])
 
+@isCurrentActivity(activity: net.whistlingfish.harmony.config.Activity) = @{
+    if(currentActivity != null && currentActivity.getId.eq(activity.getId)) true else false
+}
+
 @main("Harmony Web Control") {
+    <script type="text/javascript">
+        function activityClicked(obj){
+            $('.btn-primary').each(function(){
+                $(this).removeClass('btn-primary');
+                $(this).addClass('btn-default');
+            });
+            $('.panel-primary').each(function(){
+                $(this).removeClass('panel-primary');
+                $(this).addClass('panel-default');
+                $(this).addClass('hidden');
+            });
+            $(obj).removeClass('btn-default');
+            $(obj).addClass('btn-primary');
+
+            var activityId = obj.id.substring('btn_activity_'.length, obj.id.length);
+            var panelId = '#panel_activity_'+activityId;
+            $(panelId).removeClass('hidden');
+            $(panelId).addClass('panel-primary');
+        }
+
+        function callCommand(activityId, command){
+            var json = JSON.parse(command);
+            alert('acivityId: ' + activityId + ' command: ' + json.command);
+            //TODO: call command
+        }
+    </script>
     <div class="container">
         <div class="page-header">
             <h1>Harmony Web Control</h1>
         </div>
-        <di
         <div class="btn-group" role="group">
         @for(activity <- activities) {
-            <button type="button" class="btn btn-default">
-                @if(currentActivity != null && currentActivity.getId.eq(activity.getId)) {
+            <button type="button" id="btn_activity_@activity.getId" class="btn @{
+                if(isCurrentActivity(activity)) "btn-primary" else "btn-default"
+            }" onclick="javascript:activityClicked(this)">
+                @if(isCurrentActivity(activity)) {
                     <span class="label label-info">active</span>
                 }
                 @activity.getLabel
             </button>
         }
         </div>
+        @for(activity <- activities) {
+            <div id="panel_activity_@activity.getId" class="panel @{if(!isCurrentActivity(activity)) "hidden" else "panel-primary"}">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Controls:</h3>
+                </div>
+                <div class="panel-body">
+                @if(activity.getControlGroup != null) {
+                    @for(controlGroup <- activity.getControlGroup) {
+                        <h5>@controlGroup.getName</h5>
+                        <div class="list-group">
+                            @for(function <- controlGroup.getFunction){
+                                <a href="javascript:callCommand('@activity.getId', '@function.getAction')" class="list-group-item">@function.getLabel</a>
+                            }
+                        </div>
+                    }
+                }
+                </div>
+            </div>
+        }
     </div>
 }
