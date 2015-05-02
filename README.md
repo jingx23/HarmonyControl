@@ -20,6 +20,6 @@ start -Dharmony.ip="192.168.0.10" -Dharmony.user="Harmony Username" -Dharmony.pa
 TODO:
 - ~~List commands~~
 - ~~Send commands to the hub~~
-- Power on/off
-- Switch activity
+- ~~Power on/off~~
+- ~~Switch activity~~
 - Make a release

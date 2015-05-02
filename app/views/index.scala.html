@@ -20,9 +20,8 @@
             $(obj).addClass('btn-primary');
 
             var activityId = obj.id.substring('btn_activity_'.length, obj.id.length);
-            var panelId = '#panel_activity_'+activityId;
-            $(panelId).removeClass('hidden');
-            $(panelId).addClass('panel-primary');
+            $(obj).toggleClass('active');
+            callCommand(activityId, '{"command":"switch", "deviceId":"' + activityId + '"}');
         }
 
         function callCommand(activityId, command){
@@ -36,6 +35,16 @@
             .done(function( msg ) {
                 if(msg.status != 'OK'){
                     alert('OOOPS State: ' + msg.status + ' Message: ' + msg.message);
+                }else{
+                    if(msg.command == 'switch'){
+                        $('.btn .label').remove();
+                        $('#btn_activity_'+activityId).toggleClass('active');
+                        $('#btn_activity_'+activityId).prepend('<span class="label label-info">active</span>');
+                        if(activityId==-1) return;
+                        var panelId = '#panel_activity_'+activityId;
+                        $(panelId).removeClass('hidden');
+                        $(panelId).addClass('panel-primary');
+                    }
                 }
             });
         }
@@ -46,9 +55,12 @@
         </div>
         <div class="btn-group" role="group">
         @for(activity <- activities) {
-            <button type="button" id="btn_activity_@activity.getId" class="btn @{
+            <button type="button" id="btn_activity_@activity.getId" class="btn has-spinner @{
                 if(isCurrentActivity(activity)) "btn-primary" else "btn-default"
-            }" onclick="javascript:activityClicked(this)">
+            }" onclick="activityClicked(this)">
+                <span class="spinner">
+                    <i class="fa fa-refresh fa-spin"></i>
+                </span>
                 @if(isCurrentActivity(activity)) {
                     <span class="label label-info">active</span>
                 }
@@ -57,25 +69,27 @@
         }
         </div>
         @for(activity <- activities) {
-            <div id="panel_activity_@activity.getId" class="panel @{
-                if(!isCurrentActivity(activity)) "hidden" else "panel-primary"
-            }">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Controls:</h3>
-                </div>
-                <div class="panel-body">
-                @if(activity.getControlGroup != null) {
-                    @for(controlGroup <- activity.getControlGroup) {
-                        <h5>@controlGroup.getName</h5>
-                        <div class="list-group">
-                        @for(function <- controlGroup.getFunction) {
-                            <a href="javascript:callCommand('@activity.getId', '@function.getAction')" class="list-group-item">@function.getLabel</a>
+            @if(activity.getId != -1) {
+                <div id="panel_activity_@activity.getId" class="panel @{
+                    if(!isCurrentActivity(activity)) "hidden" else "panel-primary"
+                }">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Controls:</h3>
+                    </div>
+                    <div class="panel-body">
+                    @if(activity.getControlGroup != null) {
+                        @for(controlGroup <- activity.getControlGroup) {
+                            <h5>@controlGroup.getName</h5>
+                            <div class="list-group">
+                            @for(function <- controlGroup.getFunction) {
+                                <a href="javascript:callCommand('@activity.getId', '@function.getAction')" class="list-group-item">@function.getLabel</a>
+                            }
+                            </div>
                         }
-                        </div>
                     }
-                }
+                    </div>
                 </div>
-            </div>
+            }
         }
     </div>
 }

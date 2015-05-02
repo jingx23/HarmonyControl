@@ -50,7 +50,12 @@ public class Application extends Controller {
             result.put("message", "deviceId: " + deviceId + " command: " + command);
         }else{
             result.put("status", "OK");
-            HarmonyInstance.getClient().pressButton(deviceId, command);
+            result.put("command", command);
+            if(command.equals("switch")){
+                HarmonyInstance.getClient().startActivity(deviceId);
+            }else{
+                HarmonyInstance.getClient().pressButton(deviceId, command);
+            }
         }
         return ok(result);
     }
