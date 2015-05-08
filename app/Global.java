@@ -1,4 +1,4 @@
-import helper.HarmonyInstance;
+import helper.HarmonyFactory;
 import play.Application;
 import play.GlobalSettings;
 
@@ -10,6 +10,6 @@ public class Global extends GlobalSettings {
     @Override
     public void onStart(Application application) {
         super.onStart(application);
-        HarmonyInstance.init();
+        HarmonyFactory.initialize();
     }
 }
