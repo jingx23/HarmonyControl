@@ -28,6 +28,16 @@
         </fileSet>
         <fileSet>
             <directory>${project.build.directory}/classes</directory>
+            <includes>
+                <include>**/*.jar</include>
+            </includes>
+            <outputDirectory>lib</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>${project.build.directory}/classes</directory>
+            <excludes>
+                <exclude>**/*.jar</exclude>
+            </excludes>
             <outputDirectory>app</outputDirectory>
         </fileSet>
         <fileSet>
