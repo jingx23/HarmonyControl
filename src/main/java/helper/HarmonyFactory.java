@@ -2,10 +2,12 @@ package helper;
 
 import net.whistlingfish.harmony.HarmonyClient;
 import sirius.kernel.Sirius;
+import sirius.kernel.di.std.Register;
 
 /**
  * Created by jsc on 03.05.15.
  */
+@Register(classes = HarmonyFactory.class)
 public class HarmonyFactory {
     private static HarmonyClient harmonyClient = HarmonyClient.getInstance();
     private static boolean initialized = false;
