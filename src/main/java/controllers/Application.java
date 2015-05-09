@@ -6,7 +6,6 @@ import io.netty.handler.codec.http.HttpResponseStatus;
 import net.whistlingfish.harmony.config.Activity;
 import sirius.kernel.di.std.Register;
 import sirius.kernel.health.HandledException;
-import sirius.kernel.xml.Attribute;
 import sirius.web.controller.Controller;
 import sirius.web.controller.Routed;
 import sirius.web.http.WebContext;
