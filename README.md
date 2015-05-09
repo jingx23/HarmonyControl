@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/jingx23/HarmonyControl.svg?branch=master)](https://travis-ci.org/jingx23/HarmonyControl)
+
 # Harmony Web Control
 Simple Webinterface for communicating with a Harmony Hub
 
