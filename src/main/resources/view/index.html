@@ -25,32 +25,34 @@
 
         var activityId = obj.id.substring('btn_activity_'.length, obj.id.length);
         $(obj).toggleClass('active');
-        callCommand(activityId, '{"command":"switch", "deviceId":"' + activityId + '"}');
+        callCommand(activityId, { command:'switch', deviceId:activityId });
     }
 
     function callCommand(activityId, command) {
         $.ajax({
-            method: "POST",
+            method: 'POST',
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
-            url: "command",
-            data: command
-        })
-                .done(function (msg) {
-                    if (msg.status != 'OK') {
-                        alert('OOOPS State: ' + msg.status + ' Message: ' + msg.message);
-                    } else {
-                        if (msg.command == 'switch') {
-                            $('.btn .label').remove();
-                            $('#btn_activity_' + activityId).toggleClass('active');
-                            $('#btn_activity_' + activityId).prepend('<span class="label label-info">active</span>');
-                            if (activityId == -1) return;
-                            var panelId = '#panel_activity_' + activityId;
-                            $(panelId).removeClass('hidden');
-                            $(panelId).addClass('panel-primary');
-                        }
+            url: 'command',
+            data: JSON.stringify(command)
+        }).done(function (msg) {
+            if (msg.status != 'OK') {
+                alert('OOOPS State: ' + msg.status + ' Message: ' + msg.message);
+            } else {
+                if (msg.command == 'switch') {
+                    $('.btn .label').remove();
+                    var activityBtn = $('#btn_activity_' + activityId);
+                    activityBtn.toggleClass('active');
+                    activityBtn.prepend('<span class="label label-info">active</span>');
+                    if (activityId == -1) {
+                        return;
                     }
-                });
+                    var panel = $('#panel_activity_' + activityId);
+                    panel.removeClass('hidden');
+                    panel.addClass('panel-primary');
+                }
+            }
+        });
     }
 </script>
 <div class="container">

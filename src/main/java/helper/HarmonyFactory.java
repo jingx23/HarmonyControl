@@ -9,10 +9,10 @@ import sirius.kernel.di.std.Register;
  */
 @Register(classes = HarmonyFactory.class)
 public class HarmonyFactory {
-    private static HarmonyClient harmonyClient = HarmonyClient.getInstance();
-    private static boolean initialized = false;
+    private HarmonyClient harmonyClient = HarmonyClient.getInstance();
+    private boolean initialized = false;
 
-    public static void initialize() {
+    public void initialize() {
         String ip = Sirius.getConfig().getString("harmony.ip");
         String user = Sirius.getConfig().getString("harmony.user");
         String password = Sirius.getConfig().getString("harmony.password");
@@ -20,11 +20,11 @@ public class HarmonyFactory {
         initialized = true;
     }
 
-    public static HarmonyClient getClient() {
+    public HarmonyClient getClient() {
         return harmonyClient;
     }
 
-    public static boolean initialized() {
+    public boolean initialized() {
         return initialized;
     }
 }
