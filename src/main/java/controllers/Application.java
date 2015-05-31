@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import helper.HarmonyFactory;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import net.whistlingfish.harmony.config.Activity;
+import sirius.kernel.commons.Strings;
+import sirius.kernel.di.std.Part;
 import sirius.kernel.di.std.Register;
 import sirius.kernel.health.HandledException;
 import sirius.web.controller.Controller;
@@ -21,13 +23,16 @@ import java.util.List;
 @Register
 public class Application implements Controller {
 
+    @Part
+    private HarmonyFactory harmony;
+
     @Routed("/")
     public void index(WebContext ctx) {
-        if (!HarmonyFactory.initialized()) {
-            HarmonyFactory.initialize();
+        if (!harmony.initialized()) {
+            harmony.initialize();
         }
 
-        List<Activity> listActivities = HarmonyFactory.getClient().getConfig().getActivities();
+        List<Activity> listActivities = harmony.getClient().getConfig().getActivities();
         Collections.sort(listActivities, new Comparator<Activity>() {
             public int compare(Activity o1, Activity o2) {
                 Integer order1 = o1.getActivityOrder(), order2 = o2.getActivityOrder();
@@ -41,19 +46,20 @@ public class Application implements Controller {
                 return order1.compareTo(order2);
             }
         });
-        ctx.respondWith().template("view/index.html", HarmonyFactory.getClient().getCurrentActivity(), listActivities);
+        ctx.respondWith().template("view/index.html", harmony.getClient().getCurrentActivity(), listActivities);
     }
 
     @Routed("/command")
-    public static void command(WebContext ctx) {
+    public void command(WebContext ctx) {
         JSONObject json = ctx.getJSONContent();
         if (json == null) {
             ctx.respondWith().direct(HttpResponseStatus.NO_CONTENT, "empty json content");
+            return;
         }
         JSONStructuredOutput output = ctx.respondWith().json();
         Integer deviceId = json.getInteger("deviceId");
         String command = json.getString("command");
-        if (deviceId == null || command == null || "".equals(command)) {
+        if (deviceId == null || command == null || Strings.isEmpty(command)) {
             output.beginResult();
             output.property("status", "Error");
             output.property("message", "deviceId: " + deviceId + " command: " + command);
@@ -64,9 +70,9 @@ public class Application implements Controller {
             output.property("command", command);
             output.endResult();
             if (command.equals("switch")) {
-                HarmonyFactory.getClient().startActivity(deviceId);
+                harmony.getClient().startActivity(deviceId);
             } else {
-                HarmonyFactory.getClient().pressButton(deviceId, command);
+                harmony.getClient().pressButton(deviceId, command);
             }
         }
     }
