@@ -25,7 +25,7 @@
 
         var activityId = obj.id.substring('btn_activity_'.length, obj.id.length);
         $(obj).toggleClass('active');
-        callCommand(activityId, { command:'switch', deviceId:activityId });
+        callCommand(activityId, '{"command":"switch", "deviceId":"' + activityId + '"}');
     }
 
     function callCommand(activityId, command) {
