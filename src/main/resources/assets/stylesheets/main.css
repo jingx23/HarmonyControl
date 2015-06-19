@@ -1,3 +1,15 @@
+#content {
+    padding: 40px;
+}
+
+.small-divider {
+    height: 1px;
+    overflow: hidden;
+    background-color: #e0e0e0;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
 .spinner {
     display: inline-block;
     opacity: 0;

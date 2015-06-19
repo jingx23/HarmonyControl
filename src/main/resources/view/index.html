@@ -12,16 +12,16 @@
 <script type="text/javascript">
     function activityClicked(obj) {
         $('.btn-primary').each(function () {
-            $(this).removeClass('btn-primary');
+            $(this).removeClass('btn-primary lighten-2');
             $(this).addClass('btn-default');
         });
         $('.panel-primary').each(function () {
             $(this).removeClass('panel-primary');
             $(this).addClass('panel-default');
-            $(this).addClass('hidden');
+            $(this).addClass('hide');
         });
         $(obj).removeClass('btn-default');
-        $(obj).addClass('btn-primary');
+        $(obj).addClass('btn-primary lighten-2');
 
         var activityId = obj.id.substring('btn_activity_'.length, obj.id.length);
         $(obj).toggleClass('active');
@@ -40,68 +40,71 @@
                 alert('OOOPS State: ' + msg.status + ' Message: ' + msg.message);
             } else {
                 if (msg.command == 'switch') {
-                    $('.btn .label').remove();
+                    $('.btn #active-icon').remove();
                     var activityBtn = $('#btn_activity_' + activityId);
                     activityBtn.toggleClass('active');
-                    activityBtn.prepend('<span class="label label-info">active</span>');
+                    activityBtn.prepend('<i id="active-icon" class="mdi-av-play-arrow right"></i>');
                     if (activityId == -1) {
                         return;
                     }
                     var panel = $('#panel_activity_' + activityId);
-                    panel.removeClass('hidden');
+                    panel.removeClass('hide');
                     panel.addClass('panel-primary');
                 }
             }
         });
     }
 </script>
-<div class="container">
-    <div class="page-header">
-        <h1>Harmony Web Control</h1>
+<nav class="teal" role="navigation">
+    <div class="nav-wrapper container">
+        <a id="logo-container" class="brand-logo center">Harmony Web Control</a>
     </div>
-    <div class="btn-group" role="group">
+</nav>
+<div id="content" class="container">
+    <div class="row center">
         @for(net.whistlingfish.harmony.config.Activity activity : activities) {
-            <button type="button" id="btn_activity_@activity.getId()" class="btn has-spinner
+            <a id="btn_activity_@activity.getId()" class="wave-effect waves-light teal btn has-spinner
                     @{ if(isCurrentActivity(activity)){
-                        pe(" btn-primary");
-                       }else {
-                        pe(" btn-default");
-                       }
+                        pe(" btn-primary lighten-2");
+                       } else {
+                         pe(" btn-default");
+                        }
                      }" onclick="activityClicked(this)">
                         <span class="spinner">
                             <i class="fa fa-refresh fa-spin"></i>
                         </span>
                         @if(isCurrentActivity(activity)) {
-                            <span class="label label-info">active</span>
+                            <i id="active-icon" class="mdi-av-play-arrow right"></i>
                         }
                         @activity.getLabel()
-            </button>
+            </a>
         }
     </div>
-    @for(net.whistlingfish.harmony.config.Activity activity : activities) {
-        @if(activity.getId() != -1) {
-            <div id="panel_activity_@activity.getId()" class="panel @{ if(!isCurrentActivity(activity)){
-                                                                            pe("hidden");
-                                                                      }else {
-                                                                            pe("panel-primary");
-                                                                      }
-                                                                    }">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Controls:</h3>
-                </div>
-                <div class="panel-body">
-                    @if(activity.getControlGroup() != null) {
+    <div class="row center">
+        @for(net.whistlingfish.harmony.config.Activity activity : activities) {
+            @if(activity.getId() != -1) {
+                <div id="panel_activity_@activity.getId()" class="@{ if(!isCurrentActivity(activity)){
+                                                                                                pe("hide");
+                                                                                             }else {
+                                                                                                pe("panel-primary");
+                                                                                             }
+                                                                                            }">
+                    <h4 class="header teal-text lighten-3">Controls</h4>
+                        @if(activity.getControlGroup() != null) {
                         @for( net.whistlingfish.harmony.config.ControlGroup controlGroup : activity.getControlGroup()) {
-                            <h5>@controlGroup.getName()</h5>
-                            <div class="list-group">
+                        <div class="card">
+                            <h5 class="grey-text darken-2-5">@controlGroup.getName()</h5>
                                 @for(net.whistlingfish.harmony.config.Function function : controlGroup.getFunction()) {
-                                    <a href="javascript:callCommand('@activity.getId()', '@function.getAction()')" class="list-group-item">@function.getLabel()</a>
+                                <div class="small-divider"></div>
+                                <div class="section">
+                                    <a href="javascript:callCommand('@activity.getId()', '@function.getAction()')" class="black-text">@function.getLabel()</a>
+                                </div>
                                 }
-                            </div>
+                        </div>
                         }
-                    }
+                        }
                 </div>
-            </div>
+            }
         }
-    }
+    </div>
 </div>
