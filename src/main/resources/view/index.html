@@ -12,8 +12,6 @@
 <script type="text/javascript">
     var hamburgerButton = $('hamburger-button');
     hamburgerButton.sideNav();
-    hamburgerButton.sideNav('hide');
-
 
     function activityClicked(obj) {
         $('.btn-primary').each(function () {
@@ -45,9 +43,6 @@
                 alert('OOOPS State: ' + msg.status + ' Message: ' + msg.message);
             } else {
                 if (msg.command == 'switch') {
-                    $('.btn #active-icon').remove();
-                    var activityBtn = $('#btn_activity_' + activityId);
-                    activityBtn.toggleClass('active');
                     if (activityId == -1) {
                         return;
                     }
@@ -86,7 +81,7 @@
                 } else {
                 pe(" btn-default black-text");
                 }}">
-                    @activity.getLabel()
+                    <i class="mdi-av-movie"></i>  @activity.getLabel()
                 </a>
             </li>
         }
