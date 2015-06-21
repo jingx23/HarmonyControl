@@ -16,6 +16,16 @@
     margin-right: 30px;
 }
 
+.huge-text {
+    font-size: 150px;
+    line-height: 60px;
+}
+
+.large-text {
+    font-size: 30px;
+    line-height: 10px;
+}
+
 header, main, footer {
     padding-left: 240px;
 }

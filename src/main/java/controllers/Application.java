@@ -29,7 +29,13 @@ public class Application implements Controller {
     @Routed("/")
     public void index(WebContext ctx) {
         if (!harmony.initialized()) {
-            harmony.initialize();
+            try {
+                harmony.initialize();
+            } catch (RuntimeException e) {
+                System.out.println("nope");
+                ctx.respondWith().template("view/error.html", "A ninja stole your Harmony Hub");
+                return;
+            }
         }
 
         List<Activity> listActivities = harmony.getClient().getConfig().getActivities();
