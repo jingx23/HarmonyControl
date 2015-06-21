@@ -96,8 +96,8 @@
                             <h5 class="grey-text darken-2-5">@controlGroup.getName()</h5>
                                 @for(net.whistlingfish.harmony.config.Function function : controlGroup.getFunction()) {
                                 <div class="small-divider"></div>
-                                <div class="section">
-                                    <a href="javascript:callCommand('@activity.getId()', '@function.getAction()')" class="black-text">@function.getLabel()</a>
+                                <div class="section" style="padding-left: 10px;padding-right: 10px;">
+                                    <a href="javascript:callCommand('@activity.getId()', '@function.getAction()')" class="waves-effect waves-light btn" style="display: block;">@function.getLabel()</a>
                                 </div>
                                 }
                         </div>
