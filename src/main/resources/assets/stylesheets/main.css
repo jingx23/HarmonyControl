@@ -2,12 +2,28 @@
     padding: 40px;
 }
 
+#sidebar-logo {
+    height: 64px;
+    font-size: 26px;
+    border-bottom: 1px solid #ddd;
+}
+
 .small-divider {
     height: 1px;
     overflow: hidden;
     background-color: #e0e0e0;
     margin-left: 30px;
     margin-right: 30px;
+}
+
+header, main, footer {
+    padding-left: 240px;
+}
+
+@media only screen and (max-width : 992px) {
+    header, main, footer {
+        padding-left: 0;
+    }
 }
 
 .spinner {
