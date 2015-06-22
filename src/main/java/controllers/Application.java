@@ -32,7 +32,6 @@ public class Application implements Controller {
             try {
                 harmony.initialize();
             } catch (RuntimeException e) {
-                System.out.println("nope");
                 ctx.respondWith().template("view/error.html", "A ninja stole your Harmony Hub");
                 return;
             }

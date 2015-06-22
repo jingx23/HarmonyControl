@@ -1,6 +1,12 @@
 @args String message
 @extends(view.main.html, title: "Error")
-
+<script type="text/javascript">
+    $(document).ready(function() {
+        var hamburgerButton = $('#hamburger-button');
+        hamburgerButton.sideNav();
+        hamburgerButton.sideNav('hide');
+    });
+</script>
 <header>
     <nav>
         <nav class="top-nav blue lighten-1">

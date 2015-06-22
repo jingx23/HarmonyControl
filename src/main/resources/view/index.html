@@ -10,8 +10,12 @@
 }
 
 <script type="text/javascript">
-    var hamburgerButton = $('hamburger-button');
-    hamburgerButton.sideNav();
+    $(document).ready(function() {
+        debugger;
+        var hamburgerButton = $('#hamburger-button');
+        hamburgerButton.sideNav();
+        hamburgerButton.sideNav('show');
+    });
 
     function activityClicked(obj) {
         $('.btn-primary').each(function () {
@@ -54,15 +58,11 @@
         });
     }
 </script>
-<!--<nav class="blue lighten-1" role="navigation">-->
-    <!--<div class="nav-wrapper container">-->
-        <!--<a id="logo-container" class="brand-logo center">Harmony Web Control</a>-->
-    <!--</div>-->
-<!--</nav>-->
 <header>
 <nav>
     <nav class="top-nav blue lighten-1">
         <a id="hamburger-button" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+        <!--<a id="hamburger-button" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>-->
         <div class="container">
             <div class="nav-wrapper">
                 <a class="brand-logo center">Harmony Web Control</a>
