@@ -1,9 +1,8 @@
 @args String message
+@extends(view.main.html, title: "Harmony Control")
 <script type="text/javascript">
     $(document).ready(function() {
-        var hamburgerButton = $('#hamburger-button');
-        hamburgerButton.sideNav();
-        hamburgerButton.sideNav('hide');
+        m.initializeHub();
     });
 </script>
 <header>
@@ -18,13 +17,15 @@
         </nav>
         <ul id="slide-out" class="side-nav fixed">
             <li id="sidebar-logo" class="blue-text text-lighten-1">HarmonyControl</li>
-            <li class="bold"><a>Error</a></li>
+            <li class="bold"><a>Loading</a></li>
         </ul>
     </nav>
 </header>
 <main>
-    <div id="content" class="container center">
-        <p class="huge-text orange-text text-darken-2">:(</p>
-        <p class="large-text orange-text text-darken-2">@message</p>
+    <div id="content" class="container center" style="padding-top: 20%">
+        <div class="progress">
+            <div class="indeterminate"></div>
+        </div>
+        <p class="large-text teal-text">@message</p>
     </div>
 </main>

@@ -17,9 +17,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-/**
- * Created by jsc on 05.05.15.
- */
 @Register
 public class Application implements Controller {
 
@@ -28,6 +25,11 @@ public class Application implements Controller {
 
     @Routed("/")
     public void index(WebContext ctx) {
+        ctx.respondWith().template("view/loading.html", "Getting your Hub up and running");
+    }
+
+    @Routed("/initialize")
+    public void initialize(WebContext ctx) {
         if (!harmony.initialized()) {
             try {
                 harmony.initialize();
@@ -51,7 +53,11 @@ public class Application implements Controller {
                 return order1.compareTo(order2);
             }
         });
-        ctx.respondWith().template("view/index.html", harmony.getClient().getCurrentActivity(), listActivities);
+        try {
+            ctx.respondWith().template("view/control.html", harmony.getClient().getCurrentActivity(), listActivities);
+        } catch (RuntimeException e) {
+            ctx.respondWith().template("view/error.html", "A ninja stole your Harmony Hub");
+        }
     }
 
     @Routed("/command")
