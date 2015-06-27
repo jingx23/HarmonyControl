@@ -14,7 +14,7 @@
             <a id="hamburger-button" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
             <div class="container">
                 <div class="nav-wrapper">
-                    <a class="brand-logo center">@currentActivity.getLabel()</a>
+                    <a class="brand-logo center" id="activityHeader">@currentActivity.getLabel()</a>
                 </div>
             </div>
         </nav>
@@ -22,7 +22,7 @@
             <li id="sidebar-logo" class="blue-text text-lighten-1">HarmonyControl</li>
             @for(net.whistlingfish.harmony.config.Activity activity : activities) {
             <li class="bold">
-                <a id="btn_activity_@activity.getId()" onclick="m.activityClicked(this)" class="waves-effect waves-light
+                <a name="@activity.getLabel()" id="btn_activity_@activity.getId()" onclick="m.activityClicked(this)" class="waves-effect waves-light
                 @{ if(isCurrentActivity(activity)){
                     pe(" btn-primary green-text");
                 } else {

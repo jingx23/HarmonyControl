@@ -27,6 +27,7 @@ m.activityClicked = function (obj) {
 
     var activityId = obj.id.substring('btn_activity_'.length, obj.id.length);
     $(obj).toggleClass('active');
+    m.updateHeaderText(obj.name);
     m.callCommand(activityId, '{"command":"switch", "deviceId":"' + activityId + '"}');
 };
 
@@ -51,4 +52,8 @@ m.callCommand = function (activityId, command) {
             }
         }
     });
+};
+
+m.updateHeaderText = function (text) {
+    $('#activityHeader').html(text);
 };
