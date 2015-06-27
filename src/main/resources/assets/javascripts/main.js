@@ -4,6 +4,7 @@ m.setupSidebar = function () {
     var hamburgerButton = $('#hamburger-button');
     hamburgerButton.sideNav();
     hamburgerButton.sideNav('show');
+    debugger;
 };
 
 m.initializeHub = function () {
@@ -38,19 +39,26 @@ m.callCommand = function (activityId, command) {
         contentType: 'application/json; charset=utf-8',
         url: 'command',
         data: command
-    }).done(function (msg) {
-        if (msg.status != 'OK') {
-            alert('OOOPS State: ' + msg.status + ' Message: ' + msg.message);
-        } else {
-            if (msg.command == 'switch') {
-                if (activityId == -1) {
-                    return;
+    }).done(function (msg, status, request) {
+        if (typeof msg !== 'undefined') {
+            if (msg.status != 'OK') {
+                Materialize.toast('OOOPS State: ' + msg.status + ' Message: ' + msg.message, 3000, 'rounded');
+            } else {
+                if (msg.command == 'switch') {
+                    if (activityId == -1) {
+                        return;
+                    }
+                    var panel = $('#panel_activity_' + activityId);
+                    panel.removeClass('hide');
+                    panel.addClass('panel-primary');
                 }
-                var panel = $('#panel_activity_' + activityId);
-                panel.removeClass('hide');
-                panel.addClass('panel-primary');
             }
+        } else {
+            Materialize.toast('Error ' + request.status + ': ' + request.statusText, 3000, 'rounded');
         }
+    }).fail(function (request, status, error) {
+        console.log(request, status, error);
+        Materialize.toast('Failed to send command to harmony hub!', 3000, 'rounded');
     });
 };
 
