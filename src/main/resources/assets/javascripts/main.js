@@ -4,7 +4,6 @@ m.setupSidebar = function () {
     var hamburgerButton = $('#hamburger-button');
     hamburgerButton.sideNav();
     hamburgerButton.sideNav('show');
-    debugger;
 };
 
 m.initializeHub = function () {
@@ -57,7 +56,6 @@ m.callCommand = function (activityId, command) {
             Materialize.toast('Error ' + request.status + ': ' + request.statusText, 3000, 'rounded');
         }
     }).fail(function (request, status, error) {
-        console.log(request, status, error);
         Materialize.toast('Failed to send command to harmony hub!', 3000, 'rounded');
     });
 };
