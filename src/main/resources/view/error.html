@@ -1,0 +1,30 @@
+@args String message
+<script type="text/javascript">
+    $(document).ready(function() {
+        var hamburgerButton = $('#hamburger-button');
+        hamburgerButton.sideNav();
+        hamburgerButton.sideNav('hide');
+    });
+</script>
+<header>
+    <nav>
+        <nav class="top-nav blue lighten-1">
+            <a id="hamburger-button" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+            <div class="container">
+                <div class="nav-wrapper">
+                    <a class="brand-logo center">Harmony Web Control</a>
+                </div>
+            </div>
+        </nav>
+        <ul id="slide-out" class="side-nav fixed">
+            <li id="sidebar-logo" class="blue-text text-lighten-1">HarmonyControl</li>
+            <li class="bold"><a>Error</a></li>
+        </ul>
+    </nav>
+</header>
+<main>
+    <div id="content" class="container center">
+        <p class="huge-text orange-text text-darken-2">:(</p>
+        <p class="large-text orange-text text-darken-2">@message</p>
+    </div>
+</main>

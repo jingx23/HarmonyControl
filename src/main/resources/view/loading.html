@@ -1,0 +1,31 @@
+@args String message
+@extends(view.main.html, title: "Harmony Control")
+<script type="text/javascript">
+    $(document).ready(function() {
+        m.initializeHub();
+    });
+</script>
+<header>
+    <nav>
+        <nav class="top-nav blue lighten-1">
+            <a id="hamburger-button" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+            <div class="container">
+                <div class="nav-wrapper">
+                    <a class="brand-logo center">Harmony Web Control</a>
+                </div>
+            </div>
+        </nav>
+        <ul id="slide-out" class="side-nav fixed">
+            <li id="sidebar-logo" class="blue-text text-lighten-1">HarmonyControl</li>
+            <li class="bold"><a>Loading</a></li>
+        </ul>
+    </nav>
+</header>
+<main>
+    <div id="content" class="container center" style="padding-top: 20%">
+        <div class="progress">
+            <div class="indeterminate"></div>
+        </div>
+        <p class="large-text teal-text">@message</p>
+    </div>
+</main>
