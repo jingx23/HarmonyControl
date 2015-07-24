@@ -1,0 +1,3 @@
+[submodule "Vendor/harmony-java-client"]
+	path = Vendor/harmony-java-client
+	url = git@github.com:jingx23/harmony-java-client.git
