@@ -1,0 +1,36 @@
+apply plugin: 'idea'
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'net.jingx'
+version = '1.0-SNAPSHOT'
+project.buildDir = '/target'
+
+allprojects {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}
+
+configurations {
+    ipl
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+    maven { url "https://oss.sonatype.org/content/repositories/releases" }
+}
+
+dependencies {
+    compile project(':Vendor:harmony-java-client')
+    compile 'com.scireum:sirius-web:1.2-SNAPSHOT'
+    compile 'com.scireum:sirius-ipl:1.2-SNAPSHOT'
+    ipl 'com.scireum:sirius-ipl:1.2-SNAPSHOT'
+}
+
+task extractIPL(type: Copy) {
+    from { // use of closure defers evaluation until execution time
+        configurations.ipl.collect { zipTree(it) }
+    }
+    into file("${buildDir}/ipl")
+}
