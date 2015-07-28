@@ -1,10 +1,17 @@
-apply plugin: 'idea'
 apply plugin: 'java'
+apply plugin: 'idea'
 apply plugin: 'maven'
 
 group = 'net.jingx'
 version = '1.0-SNAPSHOT'
 project.buildDir = '/target'
+
+sourceSets {
+    main {
+        output.resourcesDir = '/target/classes'
+        output.classesDir   = '/target/classes'
+    }
+}
 
 allprojects {
     sourceCompatibility = 1.8
@@ -23,7 +30,7 @@ repositories {
 
 dependencies {
     compile project(':Vendor:harmony-java-client')
-    compile 'com.scireum:sirius-web:1.2-SNAPSHOT'
+    compile 'com.scireum:sirius-web:2.0-SNAPSHOT'
     compile 'com.scireum:sirius-ipl:1.2-SNAPSHOT'
     ipl 'com.scireum:sirius-ipl:1.0'
 }
